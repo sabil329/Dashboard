@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard Customer Churn</title>
+
+    <!-- Plotly -->
+    <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min"></script>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(135deg, #eef2f7, #d9e2ec);
+      }
+
+      .header {
+        padding: 20px 40px;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .menu {
+        padding: 10px 40px;
+      }
+
+      .menu button {
+        background: white;
+        border: 1px solid #ccc;
+        padding: 10px 16px;
+        border-radius: 10px;
+        margin-right: 10px;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      .menu button:hover {
+        background: #0b2d48;
+        color: white;
+      }
+
+      .container {
+        padding: 30px 40px;
+      }
+
+      .kpi-row {
+        display: flex;
+        gap: 20px;
+      }
+
+      .kpi {
+        flex: 1;
+        background: white;
+        padding: 20px;
+        border-radius: 14px;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+      }
+
+      .kpi small {
+        color: #6b7280;
+      }
+
+      .kpi h2 {
+        margin: 10px 0 0;
+        font-size: 32px;
+        color: #0b2d48;
+      }
+
+      .chart-card {
+        margin-top: 30px;
+        background: white;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        height: 350px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">Dashboard Customer Churn</div>
+
+    <div class="menu">
+      <button onclick="showChart('churn')">Distribusi Churn</button>
+      <button onclick="showChart('contract')">Churn vs Contract</button>
+      <button onclick="showChart('monthly')">Monthly Charges</button>
+      <button onclick="showChart('internet')">Internet Service</button>
+    </div>
+
+    <div class="container">
+      <div class="kpi-row">
+        <div class="kpi">
+          <small>Total Customer</small>
+          <h2>7,043</h2>
+        </div>
+        <div class="kpi">
+          <small>Churned</small>
+          <h2>1,869</h2>
+        </div>
+        <div class="kpi">
+          <small>Churn Rate</small>
+          <h2>26.5%</h2>
+        </div>
+        <div class="kpi">
+          <small>Avg Monthly</small>
+          <h2>$64.8</h2>
+        </div>
+      </div>
+
+      <!-- GRAFIK -->
+      <div id="chart" class="chart-card"></div>
+    </div>
+
+    <script>
+      function showChart(type) {
+        var data, layout;
+
+        if (type === "churn") {
+          data = [
+            {
+              x: ["Yes", "No"],
+              y: [1869, 5174],
+              type: "bar",
+            },
+          ];
+          layout = { title: "Distribusi Customer Churn" };
+        }
+
+        if (type === "contract") {
+          data = [
+            {
+              x: ["Month-to-month", "One year", "Two year"],
+              y: [1655, 166, 48],
+              type: "bar",
+            },
+          ];
+          layout = { title: "Churn vs Contract" };
+        }
+
+        if (type === "monthly") {
+          data = [
+            {
+              x: ["Churn", "Non-Churn"],
+              y: [74.4, 61.3],
+              type: "bar",
+            },
+          ];
+          layout = { title: "Rata-rata Monthly Charges" };
+        }
+
+        if (type === "internet") {
+          data = [
+            {
+              x: ["DSL", "Fiber optic", "No"],
+              y: [459, 1297, 113],
+              type: "bar",
+            },
+          ];
+          layout = { title: "Churn vs Internet Service" };
+        }
+
+        Plotly.newPlot("chart", data, layout);
+      }
+    </script>
+  </body>
+</html>
+<script>
+  // tampilkan grafik default saat halaman dibuka
+  window.onload = function () {
+    showChart("churn");
+  };
+</script>
